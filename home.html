@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <link rel="stylesheet" href="dashboard.css" />
+    <meta charset="UTF-8" />
+    <title>Dashboard SNOMED-CT</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+      }
+
+      /* HEADER */
+      .header {
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        color: white;
+        padding: 20px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 26px;
+      }
+      .header span {
+        font-size: 14px;
+      }
+      .logout {
+        background: #ffffff;
+        color: #1e3c72;
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* LAYOUT */
+      .container {
+        display: flex;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        width: 230px;
+        background-color: #08ad8a; /* hijau ala SIMRS */
+        min-height: 100vh;
+        padding-top: 20px;
+      }
+      .sidebar a {
+        display: block;
+        padding: 12px 20px;
+        color: white;
+        text-decoration: none;
+        margin-bottom: 5px;
+      }
+      .sidebar a:hover,
+      .sidebar a.active {
+        background-color: #2abe9e;
+      }
+
+      /* CONTENT */
+      .content {
+        flex: 1;
+        padding: 30px;
+      }
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .card h2 {
+        margin-top: 0;
+        color: #1e3c72;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <div>
+        <h1>SNOMED-CT Mapping System</h1>
+        <span>Sistem Pemetaan Resume Medis menggunakan SNOMED-CT</span>
+        <span id="tanggal"></span> |
+      </div>
+      <div>
+        Hallo, Petugas RMIK|
+        <a href="index.html" class="logout">Logout</a>
+      </div>
+    </div>
+    <div class="container">
+      <!-- sidebar + content -->
+      <div class="sidebar">
+        <!-- PROFIL PETUGAS -->
+        <div class="sidebar-profile">
+          <div class="avatar">🧑‍⚕️</div>
+          <div class="profile-text">
+            <strong>Petugas RMIK</strong>
+            <small>RSU Adhyaksa</small>
+          </div>
+        </div>
+
+        <!-- DIVIDER -->
+        <div class="sidebar-divider">MENU UTAMA</div>
+
+        <!-- MENU -->
+        <a class="active" onclick="showPage('dashboard', this)">
+          <span class="icon">📊</span> Dashboard
+        </a>
+
+        <a onclick="showPage('pendaftaran', this)">
+          <span class="icon">🧾</span> Pendaftaran Pasien
+        </a>
+
+        <a onclick="showPage('mapping', this)">
+          <span class="icon">🧠</span> Mapping Resume
+        </a>
+
+        <div class="sidebar-divider">DATA MASTER</div>
+
+        <a onclick="showPage('input', this)">
+          <span class="icon">🗣️</span> Input
+        </a>
+
+        <a onclick="showPage('Database', this)">
+          <span class="icon">🩺</span> Database
+        </a>
+
+        <!-- FOOTER -->
+        <div class="sidebar-footer">
+          <small>SIMRS v1.0</small><br />
+          <small>© 2026</small>
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="content">
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="page active">
+          <h2 class="page-title">Dashboard</h2>
+          <div class="dashboard-grid">
+            <div class="stat-card blue">
+              <div>
+                <h1>0</h1>
+                <p>Total Mapping</p>
+              </div>
+              <span class="stat-icon">📊</span>
+            </div>
+            <div class="stat-card blue-dark">
+              <div>
+                <h1>0</h1>
+                <p>Total Pasien</p>
+              </div>
+              <span class="stat-icon">🧑‍🤝‍🧑</span>
+            </div>
+            <div class="stat-card yellow">
+              <div>
+                <h1>0</h1>
+                <p>Database Diagnosis</p>
+              </div>
+              <span class="stat-icon">🩺</span>
+            </div>
+            <div class="stat-card green">
+              <div>
+                <h1>0</h1>
+                <p>Database Tindakan</p>
+              </div>
+              <span class="stat-icon">⚕️</span>
+            </div>
+            <div class="stat-card blue">
+              <div>
+                <h1>0</h1>
+                <p>Database Obat</p>
+              </div>
+              <span class="stat-icon">💊</span>
+            </div>
+          </div>
+          <h2 class="section-title">Resume Medis Terbaru</h2>
+
+          <div class="table-card">
+            <table class="table-resume">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Pasien</th>
+                  <th>Tanggal Diagnosis</th>
+                  <th>Diagnosis</th>
+                  <th>Keterangan</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>
+                    <button class="btn btn-blue">Detail</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <!-- =============== END DASHBOARD ================= -->
+
+        <!-- ================= PENDAFTARAN PASIEN ================= -->
+        <section id="pendaftaran" class="page">
+          <h2 class="page-title">Pendaftaran Pasien</h2>
+
+          <!-- ACTION BAR -->
+          <div class="action-bar">
+            <button class="btn btn-green" onclick="showPasienBaru()">
+              + Pasien Baru
+            </button>
+            <button class="btn btn-blue">Pasien Lama</button>
+          </div>
+
+          <!-- SEARCH -->
+          <div class="search-box">
+            <input
+              type="text"
+              id="searchPasien"
+              placeholder="🔍 Cari pasien berdasarkan Nama / No RM"
+              onkeyup="filterPasien()"
+            />
+          </div>
+
+          <!-- TABLE -->
+          <div class="table-card">
+            <table class="resume-table table-pendaftaran">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>No Rekam Medis</th>
+                  <th>Nama Pasien</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Tanggal Lahir</th>
+                  <th>Alamat</th>
+                  <th>No. Telepon</th>
+                  <th>Poli Tujuan</th>
+                  <th>Cara Pembayaran</th>
+                  <th>Tanggal Daftar</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody id="tabelPasien"></tbody>
+            </table>
+          </div>
+        </section>
+        <!-- =============== END PENDAFTARAN ================= -->
+        <!-- ================= MODAL PASIEN BARU ================= -->
+        <div id="modalPasien" class="modal-overlay">
+          <div class="modal-box">
+            <div class="modal-header">
+              <h2>Pendaftaran Pasien Baru</h2>
+              <span class="close-btn" onclick="tutupModal()">×</span>
+            </div>
+
+            <div class="modal-body">
+              <h3>Identitas Pasien</h3>
+              <div class="form-grid-3">
+                <div>
+                  <label>No Rekam Medis *</label>
+                  <input type="text" id="modalNoRM" maxlength="6" />
+                </div>
+
+                <div>
+                  <label>Nama Lengkap *</label>
+                  <input type="text" id="modalNamaLengkap" maxlength="100" />
+                </div>
+
+                <div>
+                  <label>No KTP *</label>
+                  <input type="text" id="modalNoKTP" maxlength="16" />
+                </div>
+
+                <div>
+                  <label>Jenis Kelamin</label>
+                  <select id="modalJK">
+                    <option>---</option>
+                    <option>Laki-laki</option>
+                    <option>Perempuan</option>
+                    <option>Tidak dapat ditentukan</option>
+                    <option>tidak mengisi</option>
+                    <option>Lainnya</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label>Tanggal Lahir</label>
+                  <input type="date" id="modalTglLahir" />
+                </div>
+
+                <div>
+                  <label>Nama Ibu Kandung</label>
+                  <input type="text" id="modalIbu" />
+                </div>
+
+                <div>
+                  <label>Agama</label>
+                  <select id="modalAgama">
+                    <option>---</option>
+                    <option>Islam</option>
+                    <option>Kristen</option>
+                    <option>Katholik</option>
+                    <option>Hindu</option>
+                    <option>Budha</option>
+                    <option>Konghucu</option>
+                    <option>Penghayat</option>
+                    <option>Lainnya</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label>Cara Pembayaran</label>
+                  <select id="modalcaraBayar">
+                    <option>---</option>
+                    <option>Umum / Mandiri</option>
+                    <option>BPJS Kesehatan</option>
+                    <option>Asuransi Lain</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Poli Tujuan</label>
+                  <select id="modalpoliTujuan">
+                    <option>---</option>
+                    <option>Kandungan</option>
+                    <option>Jantung</option>
+                    <option>Paru</option>
+                    <option>Gigi dan Mulut</option>
+                    <option>THT</option>
+                    <option>Umum</option>
+                    <option>Psikiatri</option>
+                    <option>Rehabilitasi Medik</option>
+                    <option>Bedah</option>
+                    <option>Orthopedi</option>
+                    <option>Urologi</option>
+                    <option>Neurologi</option>
+                    <option>Gizi</option>
+                    <option>Laboratorium</option>
+                    <option>Radiologi</option>
+                    <option>Fisioterapi</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label>Pekerjaan</label>
+                  <select id="modalPekerjaan">
+                    <option>---</option>
+                    <option>Pegawai Negeri Sipil</option>
+                    <option>Pegawai Swasta</option>
+                    <option>Wiraswasta</option>
+                    <option>Petani</option>
+                    <option>Buruh</option>
+                    <option>Pelajar / Mahasiswa</option>
+                    <option>Ibu Rumah Tangga</option>
+                    <option>Pengawai BUMN</option>
+                    <option>Dokter</option>
+                    <option>Perawat</option>
+                    <option>Apoteker</option>
+                    <option>Guru</option>
+                    <option>Polisi</option>
+                    <option>TNI</option>
+                    <option>Seniman</option>
+                    <option>Wartawan</option>
+                    <option>Atlet</option>
+                    <option>Developer</option>
+                    <option>Designer</option>
+                    <option>Akuntan</option>
+                    <option>Marketing</option>
+                    <option>Fotografer</option>
+                    <option>Lain-lain</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label>Status Perkawinan</label>
+                  <select id="modalStatus">
+                    <option>---</option>
+                    <option>Belum Kawin</option>
+                    <option>Kawin</option>
+                    <option>Cerai Hidup</option>
+                    <option>Cerai Mati</option>
+                  </select>
+                </div>
+                <div>
+                  <label>No. Telepon</label>
+                  <input type="text" id="modalNoTelp" />
+                </div>
+                <div>
+                  <label>Email</label>
+                  <input type="email" id="modalEmail" />
+                </div>
+                <div>
+                  <label>Golongan Darah</label>
+                  <select id="modalGolDarah">
+                    <option>---</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>AB</option>
+                    <option>O</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Status Tinggal</label>
+                  <select id="modalStatusTinggal">
+                    <option>---</option>
+                    <option>Bersama Orang Tua</option>
+                    <option>Bersama Suami/Istri</option>
+                    <option>Sendiri</option>
+                    <option>Asrama/Kos</option>
+                    <option>Lainnya</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label>pendidikan</label>
+                  <select id="modalPendidikan">
+                    <option>---</option>
+                    <option>Tidak/Belum Sekolah</option>
+                    <option>SD/Sederajat</option>
+                    <option>SMP/Sederajat</option>
+                    <option>SMA/Sederajat</option>
+                    <option>Diploma</option>
+                    <option>Sarjana</option>
+                    <option>Pasca Sarjana</option>
+                    <option>Lainnya</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label>Provinsi</label>
+                  <select id="modalProvinsi" onchange="loadKota()"></select>
+                </div>
+
+                <div>
+                  <label>Kabupaten / Kota</label>
+                  <select id="modalKota" onchange="loadKecamatan()"></select>
+                </div>
+
+                <div>
+                  <label>Kecamatan</label>
+                  <select
+                    id="modalKecamatan"
+                    onchange="loadKelurahan()"
+                  ></select>
+                </div>
+
+                <div>
+                  <label>Kelurahan</label>
+                  <select id="modalKelurahan"></select>
+                </div>
+
+                <div class="full">
+                  <label>Alamat Lengkap</label>
+                  <input type="text" id="modalAlamat" />
+                </div>
+              </div>
+            </div>
+            <div class="form-action">
+              <button type="button" class="btn btn-grey" onclick="tutupModal()">
+                ← Kembali
+              </button>
+
+              <button
+                type="submit"
+                class="btn btn-green"
+                onclick="simpanPasien()"
+              >
+                💾 Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- =============== END MODAL ================= -->
+
+        <!-- ================= MODAL DETAIL PASIEN ================= -->
+        <div id="modalDetailPasien" class="modal-overlay">
+          <div class="modal-box">
+            <div class="modal-header">
+              <h2>Ringkasan Data Pasien</h2>
+              <span class="close-btn" onclick="tutupDetail()">×</span>
+            </div>
+
+            <div class="modal-body">
+              <div class="detail-section">
+                <h4>Identitas Utama</h4>
+                <div class="detail-grid">
+                  <div>
+                    <span>No Rekam Medis</span>
+                    <p id="d-noRM"></p>
+                  </div>
+                  <div>
+                    <span>Nama Lengkap</span>
+                    <p id="d-nama"></p>
+                  </div>
+                  <div>
+                    <span>NIK</span>
+                    <p id="d-ktp"></p>
+                  </div>
+                  <div>
+                    <span>Jenis Kelamin</span>
+                    <p id="d-jk"></p>
+                  </div>
+                  <div>
+                    <span>Tanggal Lahir</span>
+                    <p id="d-tgl"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="detail-section">
+                <h4>Kontak & Alamat</h4>
+                <div class="detail-grid">
+                  <div>
+                    <span>No. Telepon</span>
+                    <p id="d-telp"></p>
+                  </div>
+                  <div class="full">
+                    <span>Alamat</span>
+                    <p id="d-alamat"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="detail-section">
+                <h4>Data Registrasi</h4>
+                <div class="detail-grid">
+                  <div>
+                    <span>Poli Tujuan</span>
+                    <p id="d-poli"></p>
+                  </div>
+                  <div>
+                    <span>Cara Pembayaran</span>
+                    <p id="d-bayar"></p>
+                  </div>
+                  <div>
+                    <span>Tanggal Daftar</span>
+                    <p id="d-daftar"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-action">
+              <button class="btn btn-blue" onclick="tutupDetail()">
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- ================= END DETAIL ================= -->
+
+        <!-- ================= MAPPING RESUME ================= -->
+        <section id="mapping" class="page">
+          <!-- HEADER -->
+          <div class="mapping-header">
+            <h2>Mapping Resume Medis</h2>
+            <button class="btn btn-green" onclick="openMappingModal()">
+              + Tambah Mapping Baru
+            </button>
+          </div>
+
+          <!-- SEARCH -->
+          <div class="search-box">
+            <input type="text" placeholder="🔍 Cari resume medis..." />
+          </div>
+
+          <!-- TABLE LIST MAPPING -->
+          <div class="table-card">
+            <table class="table-resume">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Pasien</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Usia</th>
+                  <th>Diagnosis</th>
+                  <th>Tanggal</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="7" style="text-align: center">Belum ada data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <!-- =============== END MAPPING PAGE ================= -->
+        <!-- ================= MODAL DETAIL MAPPING RESUME ================= -->
+        <div id="modalDetailMapping" class="modal-overlay">
+          <div class="modal-box">
+            <div class="modal-header">
+              <h2>Detail Mapping Resume Medis</h2>
+              <span class="close-btn" onclick="tutupDetailMapping()">×</span>
+            </div>
+
+            <div class="modal-body">
+              <!-- Identitas Pasien -->
+              <div class="detail-section">
+                <h4>Identitas Utama</h4>
+                <div class="detail-grid">
+                  <div>
+                    <span>Nama Pasien</span>
+                    <p id="dm-nama">-</p>
+                  </div>
+                  <div>
+                    <span>No Rekam Medis</span>
+                    <p id="dm-noRM">-</p>
+                  </div>
+                  <div>
+                    <span>Jenis Kelamin</span>
+                    <p id="dm-jk">-</p>
+                  </div>
+                  <div>
+                    <span>Usia</span>
+                    <p id="dm-usia">-</p>
+                  </div>
+                  <div>
+                    <span>Tanggal Mapping</span>
+                    <p id="dm-tanggal">-</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Keluhan & Diagnosis -->
+              <div class="detail-section">
+                <h4>Keluhan & Diagnosis</h4>
+                <div class="detail-grid">
+                  <div class="full">
+                    <span>Keluhan Utama</span>
+                    <p id="dm-keluhan">-</p>
+                  </div>
+                  <div class="full">
+                    <span>Riwayat Penyakit</span>
+                    <p id="dm-riwayat">-</p>
+                  </div>
+                  <div class="full">
+                    <span>Diagnosis Utama</span>
+                    <p id="dm-diagUtama">-</p>
+                  </div>
+                  <div class="full">
+                    <span>Diagnosis Sekunder</span>
+                    <p id="dm-diagSekunder">-</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tindakan & Obat -->
+              <div class="detail-section">
+                <h4>Tindakan & Pengobatan</h4>
+                <div class="detail-grid">
+                  <div class="full">
+                    <span>Tindakan Medis</span>
+                    <p id="dm-tindakan">-</p>
+                  </div>
+                  <div class="full">
+                    <span>Obat Diberikan</span>
+                    <p id="dm-obat">-</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-action">
+              <button class="btn btn-blue" onclick="tutupDetailMapping()">
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- ================= END MODAL DETAIL MAPPING ================= -->
+
+        <!-- ================= MODAL MAPPING RESUME ================= -->
+        <div id="modalMapping" class="modal-overlay">
+          <div class="modal-box large">
+            <!-- HEADER MODAL -->
+            <div class="modal-header">
+              <h2>Mapping Resume Medis</h2>
+              <span class="close-btn" onclick="closeMappingModal()">×</span>
+            </div>
+
+            <div class="modal-body">
+              <!-- DATA PASIEN -->
+              <div class="mapping-card">
+                <h3>Data Pasien</h3>
+
+                <div class="mapping-grid-2">
+                  <div>
+                    <label>Pilih Pasien</label>
+                    <select id="mappingPasien" onchange="isiDataMapping()">
+                      <option value="">Pilih pasien (Nama / No RM)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label>Jenis Kelamin</label>
+                    <input type="text" id="mappingJK" disabled />
+                  </div>
+
+                  <div>
+                    <label>Usia</label>
+                    <input type="text" id="mappingUsia" disabled />
+                  </div>
+
+                  <div>
+                    <label>Tanggal Masuk</label>
+                    <input type="date" id="mappingTanggal" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- KELUHAN & TEMUAN -->
+              <div class="mapping-card">
+                <h3>Keluhan & Temuan</h3>
+                <div class="mapping-form">
+                  <div>
+                    <label>Keluhan Utama</label>
+                    <select id="keluhanUtama" onchange="showKeluhanDetail()">
+                      <option value="">-- Pilih Keluhan Utama --</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Riwayat Penyakit</label>
+                    <input
+                      type="text"
+                      id="riwayatPenyakit"
+                      placeholder="Ketik riwayat penyakit"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- DIAGNOSIS -->
+              <div class="mapping-card">
+                <h3>Diagnosis</h3>
+                <div class="mapping-form">
+                  <div>
+                    <label>Diagnosis Utama</label>
+                    <select
+                      id="diagnosisUtama"
+                      onchange="showDiagnosisDetail('utama')"
+                    >
+                      <option value="">-- Pilih Diagnosis Utama --</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Diagnosis Sekunder</label>
+                    <select
+                      id="diagnosisSekunder"
+                      onchange="showDiagnosisDetail('sekunder')"
+                    >
+                      <option value="">-- Pilih Diagnosis Sekunder --</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TINDAKAN -->
+              <div class="mapping-card">
+                <h3>Tindakan</h3>
+                <div class="mapping-form single">
+                  <div>
+                    <label>Tindakan Medis</label>
+                    <select id="tindakanMedis" onchange="showTindakanDetail()">
+                      <option value="">-- Pilih Tindakan Medis --</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- OBAT -->
+              <div class="mapping-card">
+                <h3>Obat-obatan</h3>
+                <div class="mapping-form single">
+                  <div>
+                    <label>Obat yang Diberikan</label>
+                    <select id="obatDiberikan" onchange="showObatDetail()">
+                      <option value="">-- Pilih Obat --</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ACTION -->
+              <div class="mapping-action">
+                <button class="btn btn-grey" onclick="closeMappingModal()">
+                  Batal
+                </button>
+                <button class="btn btn-blue" onclick="simpanMapping()">
+                  💾 Simpan Mapping
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ================= END MODAL MAPPING ================= -->
+
+        <!-- DATABASE -->
+        <!-- DATABASE INPUT -->
+        <section id="input" class="page">
+          <h2 class="page-title">Input Database</h2>
+          <p class="page-subtitle">
+            Tambahkan data master untuk keluhan, diagnosis, tindakan, dan
+            obat-obatan
+          </p>
+
+          <div class="input-grid">
+            <!-- CARD KELUHAN -->
+            <div class="input-card">
+              <div class="input-icon">🗣️</div>
+              <h3>Keluhan Pasien</h3>
+              <p>Tambahkan data keluhan atau gejala yang dialami pasien</p>
+              <button class="btn-input" onclick="showInputModal('keluhan')">
+                Tambah Keluhan
+              </button>
+            </div>
+
+            <!-- CARD DIAGNOSIS -->
+            <div class="input-card">
+              <div class="input-icon">🩺</div>
+              <h3>Diagnosis</h3>
+              <p>Tambahkan data diagnosis penyakit dengan kode SNOMED-CT</p>
+              <button class="btn-input" onclick="showInputModal('diagnosis')">
+                Tambah Diagnosis
+              </button>
+            </div>
+
+            <!-- CARD TINDAKAN -->
+            <div class="input-card">
+              <div class="input-icon">⚕️</div>
+              <h3>Tindakan Medis</h3>
+              <p>Tambahkan data tindakan atau prosedur medis</p>
+              <button class="btn-input" onclick="showInputModal('tindakan')">
+                Tambah Tindakan
+              </button>
+            </div>
+
+            <!-- CARD OBAT -->
+            <div class="input-card">
+              <div class="input-icon">💊</div>
+              <h3>Obat-obatan</h3>
+              <p>Tambahkan data obat dan farmasi</p>
+              <button class="btn-input" onclick="showInputModal('obat')">
+                Tambah Obat
+              </button>
+            </div>
+          </div>
+
+          <!-- STATISTIK RINGKAS -->
+          <div class="stat-summary">
+            <div class="stat-item">
+              <span class="stat-number">0</span>
+              <span class="stat-label">Total Keluhan</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">0</span>
+              <span class="stat-label">Total Diagnosis</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">0</span>
+              <span class="stat-label">Total Tindakan</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">0</span>
+              <span class="stat-label">Total Obat</span>
+            </div>
+          </div>
+        </section>
+        <!-- =============== END DATABASE INPUT ================= -->
+        <section id="Database" class="page">
+          <h2 class="page-title">Database Master SNOMED-CT</h2>
+          <p class="page-subtitle">
+            Kelola database diagnosis, keluhan, tindakan, dan obat-obatan
+          </p>
+
+          <!-- Stats Grid -->
+          <div class="stats-grid" id="statsGrid">
+            <!-- Stats akan di-generate otomatis -->
+          </div>
+
+          <!-- Card Database -->
+          <div class="card" style="margin-top: 2rem">
+            <div class="card-body">
+              <!-- ✅ TAMBAHKAN INI - MEMBUAT card-body -->
+
+              <!-- Dropdown Selector -->
+              <div class="selector-section">
+                <label class="selector-label">Pilih Database</label>
+                <div class="select-wrapper">
+                  <select id="databaseSelector" onchange="changeDatabase()">
+                    <option value="">-- Pilih Database --</option>
+                    <option value="diagnosis">Diagnosis</option>
+                    <option value="keluhan">Keluhan</option>
+                    <option value="tindakan">Tindakan</option>
+                    <option value="obat">Obat</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Table Container -->
+              <div class="table-container" id="tableContainer">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Kode SNOMED CT</th>
+                      <th>Display Name (FSN)</th>
+                      <th>Keterangan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td
+                        colspan="4"
+                        style="
+                          text-align: center;
+                          padding: 3rem;
+                          color: var(--text-secondary);
+                        "
+                      >
+                        <div style="font-size: 3rem; margin-bottom: 1rem">
+                          🔍
+                        </div>
+                        Silakan pilih database untuk menampilkan data
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- ✅ TAMBAHKAN INI - MENUTUP card-body -->
+          </div>
+          <!-- INI MENUTUP card -->
+        </section>
+
+        <!-- =============== END DATABASE ================= -->
+
+        <!-- ================= MODAL INPUT KELUHAN (COMPACT) ================= -->
+        <div id="modalInputKeluhan" class="modal-overlay">
+          <div class="modal-box modal-compact">
+            <div class="modal-header">
+              <h2>Tambah Keluhan</h2>
+              <span class="close-btn" onclick="tutupModalInput('keluhan')"
+                >×</span
+              >
+            </div>
+
+            <div class="modal-body">
+              <form id="formKeluhan" onsubmit="simpanKeluhan(event)">
+                <div class="form-row">
+                  <label>Kode SNOMED-CT</label>
+                  <input
+                    type="text"
+                    id="keluhanKode"
+                    placeholder="Masukkan kode SNOMED-CT"
+                    required
+                  />
+                </div>
+
+                <div class="form-row">
+                  <label>Display Name (FSN)</label>
+                  <input
+                    type="text"
+                    id="keluhanNama"
+                    placeholder="Masukkan display name"
+                    required
+                  />
+                </div>
+
+                <div class="form-action">
+                  <button type="submit" class="btn btn-blue">Simpan</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= MODAL INPUT DIAGNOSIS (COMPACT) ================= -->
+        <div id="modalInputDiagnosis" class="modal-overlay">
+          <div class="modal-box modal-compact">
+            <div class="modal-header">
+              <h2>Tambah Diagnosis</h2>
+              <span class="close-btn" onclick="tutupModalInput('diagnosis')"
+                >×</span
+              >
+            </div>
+
+            <div class="modal-body">
+              <form id="formDiagnosis" onsubmit="simpanDiagnosis(event)">
+                <div class="form-row">
+                  <label>Kode SNOMED-CT</label>
+                  <input
+                    type="text"
+                    id="diagnosisKode"
+                    placeholder="Masukkan kode SNOMED-CT"
+                    required
+                  />
+                </div>
+
+                <div class="form-row">
+                  <label>Display Name (FSN)</label>
+                  <input
+                    type="text"
+                    id="diagnosisNama"
+                    placeholder="Masukkan display name"
+                    required
+                  />
+                </div>
+
+                <div class="form-action">
+                  <button type="submit" class="btn btn-blue">Simpan</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= MODAL INPUT TINDAKAN (COMPACT) ================= -->
+        <div id="modalInputTindakan" class="modal-overlay">
+          <div class="modal-box modal-compact">
+            <div class="modal-header">
+              <h2>Tambah Tindakan</h2>
+              <span class="close-btn" onclick="tutupModalInput('tindakan')"
+                >×</span
+              >
+            </div>
+
+            <div class="modal-body">
+              <form id="formTindakan" onsubmit="simpanTindakan(event)">
+                <div class="form-row">
+                  <label>Kode SNOMED-CT</label>
+                  <input
+                    type="text"
+                    id="tindakanKode"
+                    placeholder="Masukkan kode SNOMED-CT"
+                    required
+                  />
+                </div>
+
+                <div class="form-row">
+                  <label>Display Name (FSN)</label>
+                  <input
+                    type="text"
+                    id="tindakanNama"
+                    placeholder="Masukkan display name"
+                    required
+                  />
+                </div>
+
+                <div class="form-action">
+                  <button type="submit" class="btn btn-blue">Simpan</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= MODAL INPUT OBAT (COMPACT) ================= -->
+        <div id="modalInputObat" class="modal-overlay">
+          <div class="modal-box modal-compact">
+            <div class="modal-header">
+              <h2>Tambah Obat</h2>
+              <span class="close-btn" onclick="tutupModalInput('obat')">×</span>
+            </div>
+
+            <div class="modal-body">
+              <form id="formObat" onsubmit="simpanObat(event)">
+                <div class="form-row">
+                  <label>Kode SNOMED-CT</label>
+                  <input
+                    type="text"
+                    id="obatKode"
+                    placeholder="Masukkan kode SNOMED-CT"
+                    required
+                  />
+                </div>
+
+                <div class="form-row">
+                  <label>Display Name (FSN)</label>
+                  <input
+                    type="text"
+                    id="obatNama"
+                    placeholder="Masukkan display name"
+                    required
+                  />
+                </div>
+
+                <div class="form-action">
+                  <button type="submit" class="btn btn-blue">Simpan</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- =============== END MODAL INPUT ================= -->
+      </div>
+      <!-- ✅ END CONTENT -->
+    </div>
+    <!-- ✅ END CONTAINER -->
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

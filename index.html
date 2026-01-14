@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login System</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="simrs-wrapper">
+      <!-- PANEL KIRI (HIJAU) -->
+      <div class="simrs-left"></div>
+
+      <!-- PANEL KANAN (LOGIN) -->
+      <div class="simrs-right">
+        <!-- JUDUL SISTEM -->
+        <div class="system-title">
+          <h1>SNOMED-CT Mapping System</h1>
+          <p>Sistem Pemetaan Resume Medis menggunakan SNOMED-CT</p>
+        </div>
+
+        <!-- LOGIN LAMA (TETAP) -->
+        <div class="login-container">
+          <form class="login-form" id="loginForm">
+            <div class="input-group">
+              <div class="icon user-icon">&#128100;</div>
+              <input
+                type="text"
+                id="username"
+                placeholder="Username"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <div class="icon lock-icon">&#128274;</div>
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div class="options">
+              <label
+                ><input type="checkbox" id="rememberMe" /> Remember me</label
+              >
+              <a href="#" class="forgot-password">Forgot Password</a>
+            </div>
+
+            <div class="error-message" id="errorMsg">
+              Username atau password salah!
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">
+              <span class="btn-text">Login</span>
+              <span class="loader"></span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <img src="logo buat capsotne.jpeg" />
+  </body>
+</html>

@@ -1,0 +1,298 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+/* RESET */
+* {
+  box-sizing: border-box;
+}
+
+/* BODY */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  background: #f2f4ff;
+}
+
+/* LOGIN CONTAINER */
+.login-container {
+  position: relative;
+  width: 320px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+/* BACKGROUND CIRCLE */
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  left: -120px;
+  width: 300px;
+  height: 300px;
+  background: #5a4de8;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* FORM */
+.login-form {
+  padding: 40px 30px 30px;
+}
+
+/* INPUT GROUP */
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  background: #f7f7f7;
+  border-radius: 25px;
+  box-shadow: 2px 2px 15px rgba(90, 77, 232, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* HOVER INPUT GROUP */
+.input-group:hover {
+  box-shadow: 0 0 0 2px rgba(90, 77, 232, 0.4);
+}
+
+/* ICON */
+.icon {
+  padding: 12px 15px;
+  background: #5a4de8;
+  color: #ffffff;
+  border-radius: 25px 0 0 25px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* INPUT */
+input[type="text"],
+input[type="password"] {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #000000;
+  background: transparent;
+  border-radius: 0 25px 25px 0;
+}
+
+/* OPTIONS */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  font-size: 13px;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.options input[type="checkbox"] {
+  margin-right: 5px;
+  accent-color: #5a4de8;
+}
+
+/* FORGOT PASSWORD */
+.forgot-password {
+  text-decoration: none;
+  color: #5a4de8;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: #3f34c9;
+  text-decoration: underline;
+}
+
+/* BUTTON LOGIN */
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #5a4de8, #7a6df0);
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(90, 77, 232, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* HOVER BUTTON */
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(90, 77, 232, 0.6);
+}
+
+/* ACTIVE BUTTON */
+.btn-login:active {
+  transform: scale(0.97);
+}
+
+/* LOADING BUTTON */
+.btn-login {
+  position: relative;
+  overflow: hidden;
+}
+
+/* TEXT */
+.btn-login .btn-text {
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+
+/* LOADER */
+.btn-login .loader {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-top: 3px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  opacity: 0;
+}
+
+/* LOADING STATE */
+.btn-login.loading .btn-text {
+  opacity: 0;
+}
+
+.btn-login.loading .loader {
+  opacity: 1;
+}
+
+/* SPINNER ANIMATION */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ERROR MESSAGE */
+.error-message {
+  display: none;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #ffe6e6;
+  color: #d8000c;
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: center;
+  animation: shake 0.3s ease;
+}
+
+/* SHAKE ANIMATION */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* TOGGLE PASSWORD */
+.toggle-password {
+  padding: 0 15px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #5a4de8;
+  user-select: none;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.toggle-password:hover {
+  transform: scale(1.2);
+  color: #3f34c9;
+}
+
+/* ===================== */
+/* SIMRS LAYOUT WRAPPER */
+/* ===================== */
+
+.simrs-wrapper {
+  display: flex;
+  height: 100vh;
+  background: #f3fbfa;
+}
+
+/* PANEL KANAN */
+.simrs-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* JUDUL SISTEM */
+.system-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.system-title h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #0fa3b1;
+}
+
+.system-title p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* OVERRIDE POSISI LOGIN */
+.login-container {
+  margin: 0;
+}
+
+/* ===================== */
+/* PANEL KIRI SIMRS */
+/* ===================== */
+
+.simrs-left {
+  flex: 1.2;
+  background-color: #0fa3b1;
+
+  background-image: url("logo_capstone.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-size: 65%;
+
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
